@@ -209,7 +209,7 @@ export default function App() {
       </style>
 
       {/* --- PANEL DE EDICIÓN (Oculto al imprimir) --- */}
-      <div className="w-full md:w-1/3 lg:w-2/5 xl:w-1/3 p-4 md:p-6 bg-white border-r border-slate-200 overflow-y-auto max-h-screen no-print shadow-lg z-10">
+      <div className="w-full md:w-1/3 lg:w-2/5 xl:w-1/3 p-4 md:p-6 bg-white border-r border-slate-200 md:overflow-y-auto md:max-h-screen no-print shadow-lg z-10">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
             <Settings className="text-slate-800" /> Creador
@@ -505,22 +505,22 @@ export default function App() {
       </div>
 
       {/* --- PANEL DE VISTA PREVIA (El Documento Real) --- */}
-      <div className="w-full md:w-2/3 lg:w-3/5 xl:w-2/3 p-4 md:p-8 flex justify-center items-start overflow-y-auto max-h-screen bg-slate-200 print:p-0 print:overflow-visible print:max-h-none print:bg-white print:block">
+      <div className="w-full md:w-2/3 lg:w-3/5 xl:w-2/3 p-4 md:p-8 flex justify-center items-start md:overflow-y-auto md:max-h-screen bg-slate-200 print:p-0 print:overflow-visible print:max-h-none print:bg-white print:block">
         
         {/* Contenedor principal del documento */}
-        <div className="preview-container bg-white w-full max-w-[21cm] min-h-[29.7cm] p-10 md:p-14 shadow-2xl relative" id="invoice-preview">
+        <div className="preview-container bg-white w-full max-w-[21cm] min-h-[29.7cm] p-6 sm:p-10 md:p-14 shadow-2xl relative" id="invoice-preview">
           
           {/* Faja de adorno superior usando el color de marca */}
           <div className="absolute top-0 left-0 w-full h-3" style={{ backgroundColor: info.brandColor }}></div>
 
           {/* ENCABEZADO: Logo y Datos de Empresa */}
-          <div className="flex justify-between items-start mb-12 mt-4">
-            <div className="max-w-[50%]">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-end mb-12 mt-4 gap-6 sm:gap-0">
+            <div className="w-full sm:max-w-[50%]">
               {info.logoUrl ? (
-                <img src={info.logoUrl} alt="Logo" className="max-h-24 object-contain mb-4" />
+                <img src={info.logoUrl} alt="Logo" className="max-h-24 object-contain mb-4 sm:mb-0" />
               ) : (
                 <div 
-                  className="text-4xl font-black tracking-tighter mb-4" 
+                  className="text-4xl font-black tracking-tighter mb-4 sm:mb-0" 
                   style={{ color: info.brandColor }}
                 >
                   {info.companyName}
@@ -528,7 +528,7 @@ export default function App() {
               )}
             </div>
             
-            <div className="text-right max-w-[45%] text-slate-600 text-sm">
+            <div className="text-left sm:text-right w-full sm:max-w-[45%] text-slate-600 text-sm">
               <h2 className="font-bold text-lg text-slate-800 mb-1">{info.companyName}</h2>
               <p>{info.companyAddress}</p>
               <p>{info.companyPhone}</p>
@@ -537,9 +537,9 @@ export default function App() {
             </div>
           </div>
 
-          <div className="border-t border-b border-slate-200 py-6 mb-8 flex justify-between">
+          <div className="border-t border-b border-slate-200 py-6 mb-8 flex flex-col sm:flex-row justify-between gap-6 sm:gap-0">
             {/* DATOS DEL CLIENTE */}
-            <div className="w-1/2 pr-4">
+            <div className="w-full sm:w-1/2 sm:pr-4">
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2" style={{ color: info.brandColor }}>Preparado Para</h3>
               <p className="font-bold text-slate-800 text-lg mb-1">{info.clientName}</p>
               <p className="text-slate-600 text-sm leading-relaxed">{info.clientAddress}</p>
@@ -548,11 +548,11 @@ export default function App() {
             </div>
 
             {/* DATOS DEL DOCUMENTO */}
-            <div className="w-1/2 pl-4 flex flex-col items-end text-right">
+            <div className="w-full sm:w-1/2 sm:pl-4 flex flex-col items-start sm:items-end text-left sm:text-right">
               <h1 className="text-3xl font-light text-slate-400 tracking-widest uppercase mb-4">
                 {info.type}
               </h1>
-              <table className="text-sm">
+              <table className="text-sm text-left sm:text-right">
                 <tbody>
                   <tr>
                     <td className="pr-4 py-1 font-semibold text-slate-500">NÚMERO:</td>
@@ -580,7 +580,8 @@ export default function App() {
           </div>
 
           {/* TABLA DE PRODUCTOS / SERVICIOS */}
-          <table className="w-full mb-8 text-sm">
+          <div className="w-full mb-8 overflow-x-auto">
+            <table className="w-full min-w-[500px] text-sm">
             <thead>
               <tr className="text-white uppercase text-xs" style={{ backgroundColor: info.brandColor }}>
                 <th className="py-3 px-4 text-left font-semibold rounded-tl-md">Descripción</th>
@@ -601,7 +602,8 @@ export default function App() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
 
           {/* RESUMEN DE TOTALES */}
           <div className="flex justify-end mb-12">
@@ -658,8 +660,8 @@ export default function App() {
           </div>
 
           {/* PIE DE PÁGINA: Notas y Firmas */}
-          <div className="mt-16 flex justify-between items-end">
-            <div className="w-2/3 pr-8">
+          <div className="mt-16 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-12 sm:gap-0">
+            <div className="w-full sm:w-2/3 sm:pr-8">
               {info.notes && (
                 <div>
                   <h4 className="text-xs font-bold text-slate-800 uppercase mb-2">Información Adicional</h4>
@@ -670,7 +672,7 @@ export default function App() {
               )}
             </div>
             
-            <div className="w-1/3 flex flex-col items-center justify-end min-h-[100px]">
+            <div className="w-full sm:w-1/3 flex flex-col items-center justify-end min-h-[100px]">
               {info.signatureMode !== 'none' && (
                 <>
                   {(info.signatureMode === 'image_only' || info.signatureMode === 'image_and_line') && info.signatureUrl && (
